@@ -1,0 +1,46 @@
+﻿@model Enrollment
+
+@{
+    ViewData["Title"] = "Enrollment Details";
+}
+
+<div class="container">
+    <h1 class="my-4">Enrollment Details</h1>
+
+    <div class="card text-dark">
+        <div class="card-header">
+            <h4 class="card-title">Enrollment Information</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    Enrollment Date
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.EnrollmentDate.ToShortDateString()
+                </dd>
+                <dt class="col-sm-3">
+                    Student
+                </dt>
+                <dd class="col-sm-9">
+                    @* Displaying full name of the student *@
+                    @{
+                        var fullname = $"{Model.Student.FirstName} {Model.Student.LastName}";
+                    }
+                    @fullname
+                </dd>
+                <dt class="col-sm-3">
+                    Course
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Course.Title
+                </dd>
+            </dl>
+        </div>
+        <div class="card-footer">
+            <a asp-action="Index" class="btn btn-primary">Back to List</a>
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-secondary">Edit</a>
+
+        </div>
+    </div>
+</div>

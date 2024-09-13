@@ -1,0 +1,51 @@
+﻿@model ProfileFormViewModel
+
+@{
+    ViewData["Title"] = "Edit Profile As Admin";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 text-center">@ViewData["Title"]</h1>
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+                <div class="card shadow-lg border-light rounded">
+                    <div class="card-body">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="UserName" class="form-control border-primary rounded-pill" autocomplete="username" aria-required="true" placeholder="Username" maxlength="100" minlength="3" />
+                            <label asp-for="UserName">Username</label>
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="FirstName" class="form-control border-primary rounded-pill" autocomplete="given-name" aria-required="true" placeholder="First Name" maxlength="100" minlength="3" />
+                            <label asp-for="FirstName">First Name</label>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="LastName" class="form-control border-primary rounded-pill" autocomplete="family-name" aria-required="true" placeholder="Last Name" maxlength="100" minlength="3" />
+                            <label asp-for="LastName">Last Name</label>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" class="form-control border-primary rounded-pill" autocomplete="email" aria-required="true" placeholder="name@example.com" />
+                            <label asp-for="Email">Email</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

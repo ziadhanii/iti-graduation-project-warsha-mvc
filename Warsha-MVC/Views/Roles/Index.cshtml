@@ -1,0 +1,47 @@
+﻿@model IEnumerable<IdentityRole>
+
+@{
+    ViewData["Title"] = "Manage Roles";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10">
+            <div class="mb-4">
+                <h2 class="display-6">Manage Roles</h2>
+                <p class="lead">Here you can manage user roles within the system. Create, edit, or delete roles as needed.</p>
+            </div>
+
+            <partial name="_RoleForm" model="new RoleFormViewModel()" />
+
+            <div class="shadow-sm">
+                <table class="table table-bordered table-hover text-center bg-light rounded">
+                    <thead class="bg-primary text-white">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var role in Model)
+                        {
+                            <tr>
+                                <td>@role.Id</td>
+                                <td>@role.Name</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@role.Id" class="btn btn-sm btn-outline-info mx-1">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@role.Id" class="btn btn-sm btn-outline-danger mx-1">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,63 @@
+﻿@model Enrollment
+
+@{
+    ViewData["Title"] = "Cancel Enrollment";
+    var canCancel = ViewBag.CanCancel ?? false;
+}
+
+<div class="container mt-4">
+    <h1 class="display-4">Cancel Enrollment</h1>
+    <h3>Are you sure you want to cancel this enrollment?</h3>
+    <div class="card mt-3">
+        <div class="card-header">
+            <h4 class="card-title">Enrollment Details</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    Enrollment Date
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.EnrollmentDate.ToShortDateString()
+                </dd>
+                <dt class="col-sm-3">
+                    Student
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Student.UserName
+                </dd>
+                <dt class="col-sm-3">
+                    Course
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Course.Title
+                </dd>
+                <dt class="col-sm-3">
+                    Course Start Date
+                </dt>
+                <dd class="col-sm-9">
+                    @Model.Course.StartDate.ToShortDateString()
+                </dd>
+            </dl>
+
+            <div class="mt-4">
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+
+                    @if (!canCancel)
+                    {
+                        <div class="alert alert-danger mt-2">
+                            You cannot cancel this enrollment as the course is starting in less than 2 days.
+                        </div>
+                    }
+                    <button type="submit" class="btn btn-danger d-inline me-3" @(canCancel ? "" : "disabled")>
+                        Cancel Enrollment
+                    </button>
+                    <button asp-action="Index" class="btn btn-outline-secondary d-inline">
+                        Back to List
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

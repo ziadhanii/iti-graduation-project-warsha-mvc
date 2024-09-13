@@ -1,0 +1,73 @@
+﻿@model EnrollmentFormViewModel
+
+@{
+    ViewData["Title"] = "Book a Course";
+}
+
+<div class="container mt-4">
+    <h1 class="display-4 mb-4 text-center">Book a New Course</h1>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            There are some issues with your submission. Please review the errors below and try again.
+        </div>
+    }
+
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <form asp-action="Create" method="post">
+                <div class="form-group">
+                    <label asp-for="SelectedCourseId" class="control-label mb-2">Choose a Course</label>
+                    <select asp-for="SelectedCourseId" class="form-control" id="courseSelect">
+                        <option value="" selected disabled>Select a Course</option>
+                        @foreach (var course in Model.Courses)
+                        {
+                            <option value="@course.Value">@course.Text</option>
+                        }
+                    </select>
+                    <span asp-validation-for="SelectedCourseId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mt-4">
+                    <h5>Course Details</h5>
+                    <div id="courseDetails">
+                        @* Course details will be displayed here *@
+                    </div>
+                </div>
+
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary me-3">Book Now</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('courseSelect').addEventListener('change', function () {
+            var courseId = this.value;
+            if (courseId) {
+                fetch(`/Enrollments/GetCourseDetails?courseId=${courseId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('courseDetails').innerHTML = `
+                            <p><strong>Title:</strong> ${data.title}</p>
+                            <p><strong>Description:</strong> ${data.description}</p>
+                            <p><strong>Start Date:</strong> ${data.startDate}</p>
+                            <p><strong>End Date:</strong> ${data.endDate}</p>
+                        `;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching course details:', error);
+                        document.getElementById('courseDetails').innerHTML = '<p>An error occurred while fetching course details.</p>';
+                    });
+            } else {
+                document.getElementById('courseDetails').innerHTML = '';
+            }
+        });
+    </script>
+}
